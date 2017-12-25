@@ -1,19 +1,19 @@
 const express = require('express')
 
-const incidentRouter = express.Router()
+const userRouter = express.Router()
 
 const bodyParser = require('body-parser')
 
 module.exports = (app) => {
-    incidentRouter.use(bodyParser.json())
+    userRouter.use(bodyParser.json())
 
-    incidentRouter.get('/', function (req, res) {
+    userRouter.get('/', function (req, res) {
 
         const connection = app.connection;
 
         connection.connect();
 
-        connection.query('SELECT * FROM t1.incident', function (error, results) {
+        connection.query('SELECT * FROM t1.users', function (error, results) {
             if (error) {
                 res.send({
                     'status': 'error',
@@ -28,11 +28,10 @@ module.exports = (app) => {
             }
         });
 
-
         connection.end();
     });
 
-    app.use('/api/v1/incidents', incidentRouter)
+    app.use('/api/v1/users', userRouter)
 }
 
 

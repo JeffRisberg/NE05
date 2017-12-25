@@ -26,9 +26,11 @@ app.connection = mysql.createConnection({
 // routes
 const tenants = require('./endpoints/tenants')
 const incidents = require('./endpoints/incidents')
+const users = require('./endpoints/users')
 
 tenants(app);
 incidents(app);
+users(app);
 
 // start app ===============================================
 app.listen(port);
