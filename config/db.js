@@ -1,3 +1,6 @@
 module.exports = {
-    //url : 'mongodb://test:<pass>@localhost:27017/
+    host: 'localhost',
+    user: 'developer',
+    password: '123456',
+    database: 'master'
 }
