@@ -16,7 +16,8 @@ app.use(bodyParser.json()); // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
 
-app.connection = mysql.createConnection({
+app.pool  = mysql.createPool({
+    connectionLimit : 10,
     host     : db.host,
     user     : db.user,
     password : db.password,

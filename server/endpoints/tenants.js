@@ -9,26 +9,25 @@ module.exports = (app) => {
 
     tenantRouter.get('/', function (req, res) {
 
-        const connection = app.connection;
+        app.pool.getConnection(function (err, connection) {
 
-        connection.connect();
+            connection.query('SELECT * FROM tenant', function (error, results) {
+                if (error) {
+                    res.send({
+                        'status': 'error',
+                        'data': error
+                    })
+                }
+                else {
+                    res.send({
+                        'status': 'ok',
+                        'data': results
+                    })
+                }
 
-        connection.query('SELECT * FROM tenant', function (error, results) {
-            if (error) {
-                res.send({
-                    'status': 'error',
-                    'data': error
-                })
-            }
-            else {
-                res.send({
-                    'status': 'ok',
-                    'data': results
-                })
-            }
+                connection.release();
+            });
         });
-
-        connection.end();
     });
 
     app.use('/api/v1/tenants', tenantRouter)

@@ -9,26 +9,24 @@ module.exports = (app) => {
 
     userRouter.get('/', function (req, res) {
 
-        const connection = app.connection;
+        app.pool.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM t1.users', function (error, results) {
+                if (error) {
+                    res.send({
+                        'status': 'error',
+                        'data': error
+                    })
+                }
+                else {
+                    res.send({
+                        'status': 'ok',
+                        'data': results
+                    })
+                }
 
-        connection.connect();
-
-        connection.query('SELECT * FROM t1.users', function (error, results) {
-            if (error) {
-                res.send({
-                    'status': 'error',
-                    'data': error
-                })
-            }
-            else {
-                res.send({
-                    'status': 'ok',
-                    'data': results
-                })
-            }
-        });
-
-        connection.end();
+                connection.release();
+            });
+        })
     });
 
     app.use('/api/v1/users', userRouter)
