@@ -7,11 +7,12 @@ const bodyParser = require('body-parser')
 module.exports = (app) => {
     incidentRouter.use(bodyParser.json())
 
-    incidentRouter.get('/', function (req, res) {
+    incidentRouter.get('/:tenantId', function (req, res) {
+        const tenantPrefix = "t" + req.params.tenantId;
 
         app.pool.getConnection(function (err, connection) {
-
-            connection.query('SELECT * FROM t1.incident', function (error, results) {
+            const query = 'SELECT * FROM ' + tenantPrefix + ".incident";
+            connection.query(query, function (error, results) {
                 if (error) {
                     res.send({
                         'status': 'error',
