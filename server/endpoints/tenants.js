@@ -11,7 +11,7 @@ module.exports = (app) => {
 
         app.pool.getConnection(function (err, connection) {
 
-            connection.query('SELECT * FROM tenant', function (error, results) {
+            connection.query('SELECT * FROM tenants', function (error, results) {
                 if (error) {
                     res.send({
                         'status': 'error',

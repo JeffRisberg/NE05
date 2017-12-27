@@ -11,7 +11,7 @@ module.exports = (app) => {
         const tenantPrefix = "t" + req.params.tenantId;
 
         app.pool.getConnection(function (err, connection) {
-            const query = 'SELECT * FROM ' + tenantPrefix + ".incident";
+            const query = 'SELECT * FROM ' + tenantPrefix + ".incidents";
             connection.query(query, function (error, results) {
                 if (error) {
                     res.send({
